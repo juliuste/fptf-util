@@ -190,5 +190,25 @@ tape('fptf-util.validateArgument', (t) => {
 	t.throws(() => validateOptTransfers({urlSafe}), 'optTransfers')
 
 
+	// optVia
+	const validateOptVia = util.validateArgument.optVia
+	t.ok(validateOptVia(urlSafe), 'station')
+	t.ok(validateOptVia({type: 'station', id: urlSafe, name: urlSafe}), 'station')
+	t.ok(validateOptVia(), 'station')
+	t.ok(validateOptVia(null), 'station')
+	t.throws(() => validateOptVia(nonUrlSafe), 'station')
+	t.throws(() => validateOptVia(nonString), 'station')
+	t.throws(() => validateOptVia({type: 'station', id: nonUrlSafe, name: urlSafe}), 'station')
+	t.throws(() => validateOptVia({type: 'station', id: nonString, name: urlSafe}), 'station')
+	t.throws(() => validateOptVia(0), 'station')
+	t.throws(() => validateOptVia(''), 'station')
+	t.throws(() => validateOptVia({type: 'station', id: '', name: urlSafe}), 'station')
+	t.throws(() => validateOptVia({type: 'station', name: urlSafe}), 'station')
+	t.throws(() => validateOptVia({type: 'station', id: null, name: urlSafe}), 'station')
+	t.throws(() => validateOptVia({type: 'region', id: urlSafe, name: urlSafe}), 'station')
+	t.throws(() => validateOptVia({type: 'stop', id: urlSafe, name: urlSafe}), 'station')
+	t.throws(() => validateOptVia({id: urlSafe, name: urlSafe}), 'station')
+	t.throws(() => validateOptVia({type: 'station', id: urlSafe}), 'station')
+
 	t.end()
 })
