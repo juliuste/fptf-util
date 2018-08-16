@@ -34,5 +34,15 @@ tape('fptf-util.validateArguments', (t) => {
 	t.throws(() => validateStation({id: urlSafe, name: urlSafe}), 'station')
 	t.throws(() => validateStation({type: 'station', id: urlSafe}), 'station')
 
+
+	// query
+	const validateQuery = util.validateArguments.query
+	t.ok(validateQuery(urlSafe), 'query')
+	t.ok(validateQuery(nonUrlSafe), 'query')
+	t.ok(validateQuery(shortString), 'query')
+	t.throws(() => validateQuery(nonString), 'query')
+	t.throws(() => validateQuery(null), 'query')
+	t.throws(() => validateQuery(), 'query')
+
 	t.end()
 })
