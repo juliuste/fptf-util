@@ -1,5 +1,5 @@
 {
-	"name": "fptf-util",
+	"name": "fpti-util",
 	"description": "Collection of helper functions for FPTI (Friendly Public Transport Interface) modules.",
 	"version": "0.0.0",
 	"keywords": [
@@ -14,9 +14,9 @@
 		"fptf"
 	],
 	"author": "Julius Tens <mail@juliustens.eu>",
-	"homepage": "https://github.com/juliuste/fptf-util",
-	"repository": "juliuste/fptf-util",
-	"bugs": "https://github.com/juliuste/fptf-util/issues",
+	"homepage": "https://github.com/juliuste/fpti-util",
+	"repository": "juliuste/fpti-util",
+	"bugs": "https://github.com/juliuste/fpti-util/issues",
 	"main": "./index.js",
 	"files": [
 		"index.js",
