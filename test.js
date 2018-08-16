@@ -125,5 +125,17 @@ tape('fptf-util.validateArgument', (t) => {
 	t.throws(() => validateOptDistance(urlSafe), 'optDistance')
 	t.throws(() => validateOptDistance({urlSafe}), 'optDistance')
 
+
+	// optWhen
+	const validateOptWhen = util.validateArgument.optWhen
+	t.ok(validateOptWhen(new Date()), 'optWhen')
+	t.ok(validateOptWhen(new Date(100)), 'optWhen')
+	t.throws(() => validateOptWhen(null), 'optWhen')
+	t.throws(() => validateOptWhen(), 'optWhen')
+	t.throws(() => validateOptWhen(+new Date()), 'optWhen')
+	t.throws(() => validateOptWhen(nonString), 'optWhen')
+	t.throws(() => validateOptWhen(urlSafe), 'optWhen')
+	t.throws(() => validateOptWhen({urlSafe}), 'optWhen')
+
 	t.end()
 })
