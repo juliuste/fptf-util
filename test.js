@@ -4,7 +4,7 @@ const tape = require('tape')
 const util = require('./index')
 const isFunction = require('lodash.isfunction')
 
-tape.skip('fpti-util.validateArgument', (t) => {
+tape('fpti-util.validateArgument', (t) => {
 	// some constants
 	const urlSafe = 'asd123'
 	const nonUrlSafe = 'asd|w«]}≠»d'
