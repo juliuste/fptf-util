@@ -45,6 +45,24 @@ tape('fptf-util.validateArguments', (t) => {
 	t.throws(() => validateQuery(), 'query')
 
 
+	// query
+	const validateLocation = util.validateArguments.location
+	const longitude = 13.6
+	const latitude = 50.25
+	t.ok(validateLocation({type: 'location', longitude, latitude}), 'location')
+	t.ok(validateLocation({type: 'location', longitude, latitude, otherAttribute: 'key'}), 'location')
+	t.throws(() => validateLocation(), 'location')
+	t.throws(() => validateLocation(null), 'location')
+	t.throws(() => validateLocation(urlSafe), 'location')
+	t.throws(() => validateLocation(nonString), 'location')
+	t.throws(() => validateLocation({}), 'location')
+	t.throws(() => validateLocation({type: 'location'}), 'location')
+	t.throws(() => validateLocation({longitude, latitude}), 'location')
+	t.throws(() => validateLocation({type: 'location', latitude}), 'location')
+	t.throws(() => validateLocation({type: 'station', longitude, latitude}), 'location')
+	t.throws(() => validateLocation({type: 'asddsa', longitude, latitude}), 'location')
+
+
 	// opt
 	const validateOpt = util.validateArguments.opt
 	t.ok(validateOpt({}), 'opt')
