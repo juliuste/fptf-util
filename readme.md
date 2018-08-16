@@ -24,7 +24,7 @@ This module provides helper functions for the following use cases:
 
 ### Validating user input
 
-This module provides several flexible helper methods to check if user-supplied function arguments match the FPTI-JS specification. See [the docs](docs/arguments).
+This module provides several flexible helper methods to check if user-supplied function arguments match the FPTI-JS specification. See [the docs](docs/arguments.md).
 
 
 ## Contributing
