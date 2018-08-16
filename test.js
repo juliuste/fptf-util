@@ -11,223 +11,273 @@ const shortString = 'a'
 
 tape('fptf-util.validateArgument', (t) => {
 	// station, origin, destination
+	const validateStationRight = [
+		urlSafe,
+		{type: 'station', id: urlSafe, name: urlSafe}
+	]
+	const validateStationWrong = [
+		nonUrlSafe,
+		nonString,
+		{type: 'station', id: nonUrlSafe, name: urlSafe},
+		{type: 'station', id: nonString, name: urlSafe},
+		'',
+		null,
+		undefined,
+		{type: 'station', id: '', name: urlSafe},
+		{type: 'station', name: urlSafe},
+		{type: 'station', id: null, name: urlSafe},
+		{type: 'region', id: urlSafe, name: urlSafe},
+		{type: 'stop', id: urlSafe, name: urlSafe},
+		{id: urlSafe, name: urlSafe},
+		{type: 'station', id: urlSafe}
+	]
 	for (let validateStation of [util.validateArgument.station, util.validateArgument.origin, util.validateArgument.destination]) {
-		t.ok(validateStation(urlSafe), 'station')
-		t.ok(validateStation({type: 'station', id: urlSafe, name: urlSafe}), 'station')
-		t.throws(() => validateStation(nonUrlSafe), 'station')
-		t.throws(() => validateStation(nonString), 'station')
-		t.throws(() => validateStation({type: 'station', id: nonUrlSafe, name: urlSafe}), 'station')
-		t.throws(() => validateStation({type: 'station', id: nonString, name: urlSafe}), 'station')
-		t.throws(() => validateStation(''), 'station')
-		t.throws(() => validateStation({type: 'station', id: '', name: urlSafe}), 'station')
-		t.throws(() => validateStation(), 'station')
-		t.throws(() => validateStation({type: 'station', name: urlSafe}), 'station')
-		t.throws(() => validateStation(null), 'station')
-		t.throws(() => validateStation({type: 'station', id: null, name: urlSafe}), 'station')
-		t.throws(() => validateStation({type: 'region', id: urlSafe, name: urlSafe}), 'station')
-		t.throws(() => validateStation({type: 'stop', id: urlSafe, name: urlSafe}), 'station')
-		t.throws(() => validateStation({id: urlSafe, name: urlSafe}), 'station')
-		t.throws(() => validateStation({type: 'station', id: urlSafe}), 'station')
+		for (let correct of validateStationRight) t.ok(validateStation(correct), 'station')
+		for (let wrong of validateStationWrong) t.throws(() => validateStation(wrong), 'station')
 	}
 
 
 	// query
 	const validateQuery = util.validateArgument.query
-	t.ok(validateQuery(urlSafe), 'query')
-	t.ok(validateQuery(nonUrlSafe), 'query')
-	t.ok(validateQuery(shortString), 'query')
-	t.throws(() => validateQuery(nonString), 'query')
-	t.throws(() => validateQuery(null), 'query')
-	t.throws(() => validateQuery(), 'query')
+	const validateQueryRight = [
+		urlSafe,
+		nonUrlSafe,
+		shortString
+	]
+	const validateQueryWrong = [
+		nonString,
+		null,
+		undefined
+	]
+	for (let correct of validateQueryRight) t.ok(validateQuery(correct), 'query')
+	for (let wrong of validateQueryWrong) t.throws(() => validateQuery(wrong), 'query')
 
 
-	// query
+	// location
 	const validateLocation = util.validateArgument.location
 	const longitude = 13.6
 	const latitude = 50.25
-	t.ok(validateLocation({type: 'location', longitude, latitude}), 'location')
-	t.ok(validateLocation({type: 'location', longitude, latitude, otherAttribute: 'key'}), 'location')
-	t.throws(() => validateLocation(), 'location')
-	t.throws(() => validateLocation(null), 'location')
-	t.throws(() => validateLocation(urlSafe), 'location')
-	t.throws(() => validateLocation(nonString), 'location')
-	t.throws(() => validateLocation({}), 'location')
-	t.throws(() => validateLocation({type: 'location'}), 'location')
-	t.throws(() => validateLocation({longitude, latitude}), 'location')
-	t.throws(() => validateLocation({type: 'location', latitude}), 'location')
-	t.throws(() => validateLocation({type: 'station', longitude, latitude}), 'location')
-	t.throws(() => validateLocation({type: 'asddsa', longitude, latitude}), 'location')
+	const validateLocationRight = [
+		{type: 'location', longitude, latitude},
+		{type: 'location', longitude, latitude, otherAttribute: 'key'}
+	]
+	const validateLocationWrong = [
+		undefined,
+		null,
+		{},
+		urlSafe,
+		nonString,
+		{type: 'location'},
+		{longitude, latitude},
+		{type: 'location', latitude},
+		{type: 'station', longitude, latitude},
+		{type: 'asddsa', longitude, latitude},
+	]
+	for (let correct of validateLocationRight) t.ok(validateLocation(correct), 'location')
+	for (let wrong of validateLocationWrong) t.throws(() => validateLocation(wrong), 'location')
 
 
 	// opt
 	const validateOpt = util.validateArgument.opt
-	t.ok(validateOpt({}), 'opt')
-	t.ok(validateOpt({attribute: 'key'}), 'opt')
-	t.ok(validateOpt(), 'opt')
-	t.throws(() => validateOpt(urlSafe), 'opt')
-	t.throws(() => validateOpt(nonString), 'opt')
-	t.throws(() => validateOpt(null), 'opt')
-
-
-	// stationsOpt, stopsOpt, regionsOpt
-	for (let validateStationsOpt of [util.validateArgument.stationsOpt, util.validateArgument.stopsOpt, util.validateArgument.regionsOpt]) {
-		t.ok(validateStationsOpt({}), 'stationsOpt')
-		t.ok(validateStationsOpt({attribute: 'key'}), 'stationsOpt')
-		t.ok(validateStationsOpt(), 'stationsOpt')
-		t.throws(() => validateStationsOpt(urlSafe), 'stationsOpt')
-		t.throws(() => validateStationsOpt(nonString), 'stationsOpt')
-		t.throws(() => validateStationsOpt(null), 'stationsOpt')
-	}
-
-
-	// stationsSearchOpt, stopsSearchOpt, regionsSearchOpt
-	for (let validateStationsSearchOpt of [util.validateArgument.stationsSearchOpt, util.validateArgument.stopsSearchOpt, util.validateArgument.regionsSearchOpt]) {
-		t.ok(validateStationsSearchOpt({}), 'stationsSearchOpt')
-		t.ok(validateStationsSearchOpt({attribute: 'key'}), 'stationsSearchOpt')
-		t.ok(validateStationsSearchOpt(), 'stationsSearchOpt')
-		t.throws(() => validateStationsSearchOpt(urlSafe), 'stationsSearchOpt')
-		t.throws(() => validateStationsSearchOpt(nonString), 'stationsSearchOpt')
-		t.throws(() => validateStationsSearchOpt(null), 'stationsSearchOpt')
-	}
-
-
-	// stationsNearbyOpt, stopsNearbyOpt, regionsNearbyOpt
-	for (let validateStationsNearbyOpt of [util.validateArgument.stationsNearbyOpt, util.validateArgument.stopsNearbyOpt, util.validateArgument.regionsNearbyOpt]) {
-		t.ok(validateStationsNearbyOpt({}), 'stationsNearbyOpt')
-		t.ok(validateStationsNearbyOpt({attribute: 'key'}), 'stationsNearbyOpt')
-		t.ok(validateStationsNearbyOpt(), 'stationsNearbyOpt')
-		t.throws(() => validateStationsNearbyOpt(urlSafe), 'stationsNearbyOpt')
-		t.throws(() => validateStationsNearbyOpt(nonString), 'stationsNearbyOpt')
-		t.throws(() => validateStationsNearbyOpt(null), 'stationsNearbyOpt')
-
-		t.ok(validateStationsNearbyOpt({distance: 10}), 'stationsNearbyOpt')
-		t.ok(validateStationsNearbyOpt({distance: 10014.16, otherAttribute: 'val'}), 'stationsNearbyOpt')
-		t.ok(validateStationsNearbyOpt({distance: null}), 'stationsNearbyOpt')
-		t.ok(validateStationsNearbyOpt({distance: undefined}), 'stationsNearbyOpt')
-		t.throws(() => validateStationsNearbyOpt({distance: -100}), 'stationsNearbyOpt')
-		t.throws(() => validateStationsNearbyOpt({distance: urlSafe}), 'stationsNearbyOpt')
-		t.throws(() => validateStationsNearbyOpt({distance: {urlSafe}}), 'stationsNearbyOpt')
-	}
+	const validateOptRight = [
+		{},
+		{attribute: 'key'},
+		undefined
+	]
+	const validateOptWrong = [
+		null,
+		urlSafe,
+		nonString
+	]
+	for (let correct of validateOptRight) t.ok(validateOpt(correct), 'opt')
+	for (let wrong of validateOptWrong) t.throws(() => validateOpt(wrong), 'opt')
 
 
 	// optDistance
 	const validateOptDistance = util.validateArgument.optDistance
-	t.ok(validateOptDistance(10), 'optDistance')
-	t.ok(validateOptDistance(10014.16), 'optDistance')
-	t.ok(validateOptDistance(), 'optDistance')
-	t.ok(validateOptDistance(null), 'optDistance')
-	t.ok(validateOptDistance(0), 'optDistance')
-	t.throws(() => validateOptDistance(''), 'optDistance')
-	t.throws(() => validateOptDistance({}), 'optDistance')
-	t.throws(() => validateOptDistance(-100), 'optDistance')
-	t.throws(() => validateOptDistance(urlSafe), 'optDistance')
-	t.throws(() => validateOptDistance({urlSafe}), 'optDistance')
+	const validateOptDistanceRight = [
+		undefined,
+		null,
+		0,
+		10,
+		10014.16
+	]
+	const validateOptDistanceWrong = [
+		'',
+		{},
+		-100,
+		urlSafe,
+		{urlSafe}
+	]
+	for (let correct of validateOptDistanceRight) t.ok(validateOptDistance(correct), 'optDistance')
+	for (let wrong of validateOptDistanceWrong) t.throws(() => validateOptDistance(wrong), 'optDistance')
 
 
 	// optWhen, optDepartureAfter, optArrivalBefore
+	const validateOptWhenRight = [
+		undefined,
+		null,
+		new Date(),
+		new Date(100)
+	]
+	const validateOptWhenWrong = [
+		'',
+		{},
+		0,
+		+new Date(),
+		new Date()+'',
+		nonString,
+		urlSafe,
+		{urlSafe}
+	]
 	for (let validateOptWhen of [util.validateArgument.optWhen, util.validateArgument.optDepartureAfter, util.validateArgument.optArrivalBefore]) {
-		t.ok(validateOptWhen(new Date()), 'optWhen')
-		t.ok(validateOptWhen(new Date(100)), 'optWhen')
-		t.ok(validateOptWhen(), 'optWhen')
-		t.ok(validateOptWhen(null), 'optWhen')
-		t.throws(() => validateOptWhen(''), 'optWhen')
-		t.throws(() => validateOptWhen(0), 'optWhen')
-		t.throws(() => validateOptWhen({}), 'optWhen')
-		t.throws(() => validateOptWhen(+new Date()), 'optWhen')
-		t.throws(() => validateOptWhen(nonString), 'optWhen')
-		t.throws(() => validateOptWhen(urlSafe), 'optWhen')
-		t.throws(() => validateOptWhen({urlSafe}), 'optWhen')
+		for (let correct of validateOptWhenRight) t.ok(validateOptWhen(correct), 'optWhen')
+		for (let wrong of validateOptWhenWrong) t.throws(() => validateOptWhen(wrong), 'optWhen')
 	}
 
 
 	// optResults
 	const validateOptResults = util.validateArgument.optResults
-	t.ok(validateOptResults(1), 'optResults')
-	t.ok(validateOptResults(192), 'optResults')
-	t.ok(validateOptResults(), 'optResults')
-	t.ok(validateOptResults(null), 'optResults')
-	t.throws(() => validateOptResults(''), 'optResults')
-	t.throws(() => validateOptResults(0), 'optResults')
-	t.throws(() => validateOptResults({}), 'optResults')
-	t.throws(() => validateOptResults(new Date()), 'optResults')
-	t.throws(() => validateOptResults(-20), 'optResults')
-	t.throws(() => validateOptResults(1.26), 'optResults')
-	t.throws(() => validateOptResults(urlSafe), 'optResults')
-	t.throws(() => validateOptResults({urlSafe}), 'optResults')
+	const validateOptResultsRight = [
+		undefined,
+		null,
+		1,
+		192
+	]
+	const validateOptResultsWrong = [
+		'',
+		{},
+		0,
+		new Date(),
+		-20,
+		1.26,
+		urlSafe,
+		{urlSafe}
+	]
+	for (let correct of validateOptResultsRight) t.ok(validateOptResults(correct), 'optResults')
+	for (let wrong of validateOptResultsWrong) t.throws(() => validateOptResults(wrong), 'optResults')
 
 
 	// optInterval
 	const validateOptInterval = util.validateArgument.optInterval
-	t.ok(validateOptInterval(10), 'optInterval')
-	t.ok(validateOptInterval(10014.16), 'optInterval')
-	t.ok(validateOptInterval(), 'optInterval')
-	t.ok(validateOptInterval(null), 'optInterval')
-	t.ok(validateOptInterval(0), 'optInterval')
-	t.throws(() => validateOptInterval(''), 'optInterval')
-	t.throws(() => validateOptInterval({}), 'optInterval')
-	t.throws(() => validateOptInterval(-100), 'optInterval')
-	t.throws(() => validateOptInterval(urlSafe), 'optInterval')
-	t.throws(() => validateOptInterval({urlSafe}), 'optInterval')
+	const validateOptIntervalRight = [
+		undefined,
+		null,
+		0,
+		10,
+		10014.16
+	]
+	const validateOptIntervalWrong = [
+		'',
+		{},
+		-100,
+		urlSafe,
+		{urlSafe}
+	]
+	for (let correct of validateOptIntervalRight) t.ok(validateOptInterval(correct), 'optInterval')
+	for (let wrong of validateOptIntervalWrong) t.throws(() => validateOptInterval(wrong), 'optInterval')
 
 
 	// optTransfers
 	const validateOptTransfers = util.validateArgument.optTransfers
-	t.ok(validateOptTransfers(1), 'optTransfers')
-	t.ok(validateOptTransfers(192), 'optTransfers')
-	t.ok(validateOptTransfers(0), 'optTransfers')
-	t.ok(validateOptTransfers(), 'optTransfers')
-	t.ok(validateOptTransfers(null), 'optTransfers')
-	t.throws(() => validateOptTransfers(''), 'optTransfers')
-	t.throws(() => validateOptTransfers({}), 'optTransfers')
-	t.throws(() => validateOptTransfers(new Date()), 'optTransfers')
-	t.throws(() => validateOptTransfers(-20), 'optTransfers')
-	t.throws(() => validateOptTransfers(1.26), 'optTransfers')
-	t.throws(() => validateOptTransfers(urlSafe), 'optTransfers')
-	t.throws(() => validateOptTransfers({urlSafe}), 'optTransfers')
+	const validateOptTransfersRight = [
+		undefined,
+		null,
+		0,
+		1,
+		192
+	]
+	const validateOptTransfersWrong = [
+		'',
+		{},
+		new Date(),
+		-20,
+		1.26,
+		urlSafe,
+		{urlSafe}
+	]
+	for (let correct of validateOptTransfersRight) t.ok(validateOptTransfers(correct), 'optTransfers')
+	for (let wrong of validateOptTransfersWrong) t.throws(() => validateOptTransfers(wrong), 'optTransfers')
 
 
 	// optVia, optDirection
+	const validateOptStationRight = [
+		undefined,
+		null,
+		urlSafe,
+		{type: 'station', id: urlSafe, name: urlSafe}
+	]
+	const validateOptStationWrong = [
+		'',
+		0,
+		nonUrlSafe,
+		nonString,
+		{type: 'station', id: nonUrlSafe, name: urlSafe},
+		{type: 'station', id: nonString, name: urlSafe},
+		{type: 'station', id: '', name: urlSafe},
+		{type: 'station', name: urlSafe},
+		{type: 'station', id: null, name: urlSafe},
+		{type: 'region', id: urlSafe, name: urlSafe},
+		{type: 'stop', id: urlSafe, name: urlSafe},
+		{id: urlSafe, name: urlSafe},
+		{type: 'station', id: urlSafe}
+	]
 	for (let validateOptStation of [util.validateArgument.optVia, util.validateArgument.optDirection]) {
-		t.ok(validateOptStation(urlSafe), 'optStation')
-		t.ok(validateOptStation({type: 'station', id: urlSafe, name: urlSafe}), 'optStation')
-		t.ok(validateOptStation(), 'optStation')
-		t.ok(validateOptStation(null), 'optStation')
-		t.throws(() => validateOptStation(nonUrlSafe), 'optStation')
-		t.throws(() => validateOptStation(nonString), 'optStation')
-		t.throws(() => validateOptStation({type: 'station', id: nonUrlSafe, name: urlSafe}), 'optStation')
-		t.throws(() => validateOptStation({type: 'station', id: nonString, name: urlSafe}), 'optStation')
-		t.throws(() => validateOptStation(0), 'optStation')
-		t.throws(() => validateOptStation(''), 'optStation')
-		t.throws(() => validateOptStation({type: 'station', id: '', name: urlSafe}), 'optStation')
-		t.throws(() => validateOptStation({type: 'station', name: urlSafe}), 'optStation')
-		t.throws(() => validateOptStation({type: 'station', id: null, name: urlSafe}), 'optStation')
-		t.throws(() => validateOptStation({type: 'region', id: urlSafe, name: urlSafe}), 'optStation')
-		t.throws(() => validateOptStation({type: 'stop', id: urlSafe, name: urlSafe}), 'optStation')
-		t.throws(() => validateOptStation({id: urlSafe, name: urlSafe}), 'optStation')
-		t.throws(() => validateOptStation({type: 'station', id: urlSafe}), 'optStation')
+		for (let correct of validateOptStationRight) t.ok(validateOptStation(correct), 'optStation')
+		for (let wrong of validateOptStationWrong) t.throws(() => validateOptStation(wrong), 'optStation')
 	}
 
 
 	// optCurrency
 	const validateOptCurrency = util.validateArgument.optCurrency
-	t.ok(validateOptCurrency('EUR'), 'optCurrency')
-	t.ok(validateOptCurrency('pln'), 'optCurrency')
-	t.ok(validateOptCurrency('GbP'), 'optCurrency')
-	t.ok(validateOptCurrency(), 'optCurrency')
-	t.ok(validateOptCurrency(null), 'optCurrency')
-	t.throws(() => validateOptCurrency('ZZZ'), 'optCurrency')
-	t.throws(() => validateOptCurrency('ABC'), 'optCurrency')
-	t.throws(() => validateOptCurrency('cde'), 'optCurrency')
-	t.throws(() => validateOptCurrency('DeZ'), 'optCurrency')
-	t.throws(() => validateOptCurrency(''), 'optCurrency')
-	t.throws(() => validateOptCurrency({}), 'optCurrency')
-	t.throws(() => validateOptCurrency(new Date()), 'optCurrency')
-	t.throws(() => validateOptCurrency(-20), 'optCurrency')
-	t.throws(() => validateOptCurrency(1.26), 'optCurrency')
-	t.throws(() => validateOptCurrency(urlSafe), 'optCurrency')
-	t.throws(() => validateOptCurrency(nonUrlSafe), 'optCurrency')
-	t.throws(() => validateOptCurrency(nonString), 'optCurrency')
-	t.throws(() => validateOptCurrency({urlSafe}), 'optCurrency')
+	const validateOptCurrencyRight = [
+		undefined,
+		null,
+		'EUR',
+		'pln',
+		'GbP'
+	]
+	const validateOptCurrencyWrong = [
+		'ZZZ',
+		'ABC',
+		'cde',
+		'DeY',
+		'',
+		{},
+		new Date(),
+		-20,
+		1.26,
+		urlSafe,
+		nonUrlSafe,
+		nonString,
+		{urlSafe}
+	]
+	for (let correct of validateOptCurrencyRight) t.ok(validateOptCurrency(correct), 'optCurrency')
+	for (let wrong of validateOptCurrencyWrong) t.throws(() => validateOptCurrency(wrong), 'optCurrency')
+
+
+	// stationsOpt, stopsOpt, regionsOpt
+	for (let validateStationsOpt of [util.validateArgument.stationsOpt, util.validateArgument.stopsOpt, util.validateArgument.regionsOpt]) {
+		for (let correct of validateOptRight) t.ok(validateStationsOpt(correct), 'stationsOpt')
+		for (let wrong of validateOptWrong) t.throws(() => validateStationsOpt(wrong), 'stationsOpt')
+	}
+
+
+	// stationsSearchOpt, stopsSearchOpt, regionsSearchOpt
+	for (let validateStationsSearchOpt of [util.validateArgument.stationsSearchOpt, util.validateArgument.stopsSearchOpt, util.validateArgument.regionsSearchOpt]) {
+		for (let correct of validateOptRight) t.ok(validateStationsSearchOpt(correct), 'stationsSearchOpt')
+		for (let wrong of validateOptWrong) t.throws(() => validateStationsSearchOpt(wrong), 'stationsSearchOpt')
+	}
+
+
+	// stationsNearbyOpt, stopsNearbyOpt, regionsNearbyOpt
+	for (let validateStationsNearbyOpt of [util.validateArgument.stationsNearbyOpt, util.validateArgument.stopsNearbyOpt, util.validateArgument.regionsNearbyOpt]) {
+		for (let correct of validateOptRight) t.ok(validateStationsNearbyOpt(correct), 'stationsNearbyOpt')
+		for (let wrong of validateOptWrong) t.throws(() => validateStationsNearbyOpt(wrong), 'stationsNearbyOpt')
+
+		for (let correct of validateOptDistanceRight) t.ok(validateStationsNearbyOpt({distance: correct}, 'stationsNearbyOpt'))
+		for (let wrong of validateOptDistanceWrong) t.throws(() => validateStationsNearbyOpt({distance: wrong}, 'stationsNearbyOpt'))
+	}
 
 	t.end()
 })
