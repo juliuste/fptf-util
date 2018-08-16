@@ -73,5 +73,16 @@ tape('fptf-util.validateArguments', (t) => {
 	t.throws(() => validateOpt(nonString), 'opt')
 	t.throws(() => validateOpt(null), 'opt')
 
+
+	// stationsOpt, stopsOpt, regionsOpt
+	for (let validateStationsOpt of [util.validateArguments.stationsOpt, util.validateArguments.stopsOpt, util.validateArguments.regionsOpt]) {
+		t.ok(validateStationsOpt({}), 'stationsOpt')
+		t.ok(validateStationsOpt({attribute: 'key'}), 'stationsOpt')
+		t.ok(validateStationsOpt(), 'stationsOpt')
+		t.throws(() => validateStationsOpt(urlSafe), 'stationsOpt')
+		t.throws(() => validateStationsOpt(nonString), 'stationsOpt')
+		t.throws(() => validateStationsOpt(null), 'stationsOpt')
+	}
+
 	t.end()
 })
