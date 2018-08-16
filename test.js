@@ -2,7 +2,7 @@
 
 const tape = require('tape')
 const util = require('./index')
-const isFunction = require('lodash/isfunction')
+const isFunction = require('lodash.isfunction')
 
 tape.skip('fpti-util.validateArgument', (t) => {
 	// some constants
