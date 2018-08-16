@@ -326,5 +326,31 @@ tape('fptf-util.validateArgument', (t) => {
 	for (let wrong of validateJourneysOptWrong) t.throws(() => validateJourneysOpt(wrong, 'journeysOpt'))
 
 
+	// stopoversOpt
+	const validateStopoversOpt = util.validateArgument.stopoversOpt
+	const validateStopoversOptRight = validateJourneysOptRight
+	const validateStopoversOptWrong = validateJourneysOptWrong
+	for (let correct of validateOptRight) t.ok(validateStopoversOpt(correct), 'stopoversOpt')
+	for (let wrong of validateOptWrong) t.throws(() => validateStopoversOpt(wrong), 'stopoversOpt')
+	for (let correct of validateOptWhenRight) {
+		t.ok(validateStopoversOpt({when: correct}, 'stopoversOpt'))
+		t.ok(validateStopoversOpt({departureAfter: correct}, 'stopoversOpt'))
+		t.ok(validateStopoversOpt({arrivalBefore: correct}, 'stopoversOpt'))
+	}
+	for (let wrong of validateOptWhenWrong) {
+		t.throws(() => validateStopoversOpt({when: wrong}, 'stopoversOpt'))
+		t.throws(() => validateStopoversOpt({departureAfter: wrong}, 'stopoversOpt'))
+		t.throws(() => validateStopoversOpt({arrivalBefore: wrong}, 'stopoversOpt'))
+	}
+	for (let correct of validateOptResultsRight) t.ok(validateStopoversOpt({results: correct}, 'stopoversOpt'))
+	for (let wrong of validateOptResultsWrong) t.throws(() => validateStopoversOpt({results: wrong}, 'stopoversOpt'))
+	for (let correct of validateOptIntervalRight) t.ok(validateStopoversOpt({interval: correct}, 'stopoversOpt'))
+	for (let wrong of validateOptIntervalWrong) t.throws(() => validateStopoversOpt({interval: wrong}, 'stopoversOpt'))
+	for (let correct of validateOptStationRight) t.ok(validateStopoversOpt({direction: correct}, 'stopoversOpt'))
+	for (let wrong of validateOptStationWrong) t.throws(() => validateStopoversOpt({direction: wrong}, 'stopoversOpt'))
+	for (let correct of validateStopoversOptRight) t.ok(validateStopoversOpt(correct, 'stopoversOpt'))
+	for (let wrong of validateStopoversOptWrong) t.throws(() => validateStopoversOpt(wrong, 'stopoversOpt'))
+
+
 	t.end()
 })
