@@ -114,5 +114,16 @@ tape('fptf-util.validateArgument', (t) => {
 		t.throws(() => validateStationsNearbyOpt({distance: {urlSafe}}), 'stationsNearbyOpt')
 	}
 
+
+	// optDistance
+	const validateOptDistance = util.validateArgument.optDistance
+	t.ok(validateOptDistance(10), 'optDistance')
+	t.ok(validateOptDistance(10014.16), 'optDistance')
+	t.ok(validateOptDistance(null), 'optDistance')
+	t.ok(validateOptDistance(), 'optDistance')
+	t.throws(() => validateOptDistance(-100), 'optDistance')
+	t.throws(() => validateOptDistance(urlSafe), 'optDistance')
+	t.throws(() => validateOptDistance({urlSafe}), 'optDistance')
+
 	t.end()
 })
