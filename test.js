@@ -279,5 +279,52 @@ tape('fptf-util.validateArgument', (t) => {
 		for (let wrong of validateOptDistanceWrong) t.throws(() => validateStationsNearbyOpt({distance: wrong}, 'stationsNearbyOpt'))
 	}
 
+
+	// journeysOpt
+	const validateJourneysOpt = util.validateArgument.journeysOpt
+	const [date1, date2] = validateOptWhenRight.filter(x => !!x)
+	const validateJourneysOptRight = [
+		{when: date1, departureAfter: date1},
+		{when: date1, departureAfter: null},
+		{when: null, departureAfter: date1},
+		{when: null, departureAfter: null},
+		{when: null, arrivalBefore: date1},
+		{departureAfter: null, arrivalBefore: date1},
+		{when: date1, arrivalBefore: null},
+		{departureAfter: date1, arrivalBefore: null}
+	]
+	const validateJourneysOptWrong = [
+		{when: date1, departureAfter: date2},
+		{arrivalBefore: date1, departureAfter: date2},
+		{arrivalBefore: date1, departureAfter: date1},
+		{arrivalBefore: date1, when: date1},
+		{arrivalBefore: date1, when: date1}
+	]
+	for (let correct of validateOptRight) t.ok(validateJourneysOpt(correct), 'journeysOpt')
+	for (let wrong of validateOptWrong) t.throws(() => validateJourneysOpt(wrong), 'journeysOpt')
+	for (let correct of validateOptWhenRight) {
+		t.ok(validateJourneysOpt({when: correct}, 'journeysOpt'))
+		t.ok(validateJourneysOpt({departureAfter: correct}, 'journeysOpt'))
+		t.ok(validateJourneysOpt({arrivalBefore: correct}, 'journeysOpt'))
+	}
+	for (let wrong of validateOptWhenWrong) {
+		t.throws(() => validateJourneysOpt({when: wrong}, 'journeysOpt'))
+		t.throws(() => validateJourneysOpt({departureAfter: wrong}, 'journeysOpt'))
+		t.throws(() => validateJourneysOpt({arrivalBefore: wrong}, 'journeysOpt'))
+	}
+	for (let correct of validateOptResultsRight) t.ok(validateJourneysOpt({results: correct}, 'journeysOpt'))
+	for (let wrong of validateOptResultsWrong) t.throws(() => validateJourneysOpt({results: wrong}, 'journeysOpt'))
+	for (let correct of validateOptIntervalRight) t.ok(validateJourneysOpt({interval: correct}, 'journeysOpt'))
+	for (let wrong of validateOptIntervalWrong) t.throws(() => validateJourneysOpt({interval: wrong}, 'journeysOpt'))
+	for (let correct of validateOptTransfersRight) t.ok(validateJourneysOpt({transfers: correct}, 'journeysOpt'))
+	for (let wrong of validateOptTransfersWrong) t.throws(() => validateJourneysOpt({transfers: wrong}, 'journeysOpt'))
+	for (let correct of validateOptCurrencyRight) t.ok(validateJourneysOpt({currency: correct}, 'journeysOpt'))
+	for (let wrong of validateOptCurrencyWrong) t.throws(() => validateJourneysOpt({currency: wrong}, 'journeysOpt'))
+	for (let correct of validateOptStationRight) t.ok(validateJourneysOpt({via: correct}, 'journeysOpt'))
+	for (let wrong of validateOptStationWrong) t.throws(() => validateJourneysOpt({via: wrong}, 'journeysOpt'))
+	for (let correct of validateJourneysOptRight) t.ok(validateJourneysOpt(correct, 'journeysOpt'))
+	for (let wrong of validateJourneysOptWrong) t.throws(() => validateJourneysOpt(wrong, 'journeysOpt'))
+
+
 	t.end()
 })
