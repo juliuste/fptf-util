@@ -137,5 +137,20 @@ tape('fptf-util.validateArgument', (t) => {
 	t.throws(() => validateOptWhen(urlSafe), 'optWhen')
 	t.throws(() => validateOptWhen({urlSafe}), 'optWhen')
 
+
+	// optResults
+	const validateOptResults = util.validateArgument.optResults
+	t.ok(validateOptResults(1), 'optResults')
+	t.ok(validateOptResults(192), 'optResults')
+	t.throws(() => validateOptResults(), 'optResults')
+	t.throws(() => validateOptResults(null), 'optResults')
+	t.throws(() => validateOptResults(new Date()), 'optResults')
+	t.throws(() => validateOptResults(0), 'optResults')
+	t.throws(() => validateOptResults(-20), 'optResults')
+	t.throws(() => validateOptResults(1.26), 'optResults')
+	t.throws(() => validateOptResults(urlSafe), 'optResults')
+	t.throws(() => validateOptResults({urlSafe}), 'optResults')
+
+
 	t.end()
 })
