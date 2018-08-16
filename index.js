@@ -1,5 +1,5 @@
 'use strict'
 
-const validateArguments = require('./lib/validate-arguments')
+const validateArgument = require('./lib/validate-argument')
 
-module.exports = ({validateArguments})
+module.exports = ({validateArgument})

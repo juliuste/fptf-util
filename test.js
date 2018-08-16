@@ -9,9 +9,9 @@ const nonUrlSafe = 'asd|w«]}≠»d'
 const nonString = 12345
 const shortString = 'a'
 
-tape('fptf-util.validateArguments', (t) => {
+tape('fptf-util.validateArgument', (t) => {
 	// station, origin, destination
-	for (let validateStation of [util.validateArguments.station, util.validateArguments.origin, util.validateArguments.destination]) {
+	for (let validateStation of [util.validateArgument.station, util.validateArgument.origin, util.validateArgument.destination]) {
 		t.ok(isFunction(validateStation), 'station')
 
 		t.ok(validateStation(urlSafe), 'station')
@@ -37,7 +37,7 @@ tape('fptf-util.validateArguments', (t) => {
 
 
 	// query
-	const validateQuery = util.validateArguments.query
+	const validateQuery = util.validateArgument.query
 	t.ok(validateQuery(urlSafe), 'query')
 	t.ok(validateQuery(nonUrlSafe), 'query')
 	t.ok(validateQuery(shortString), 'query')
@@ -47,7 +47,7 @@ tape('fptf-util.validateArguments', (t) => {
 
 
 	// query
-	const validateLocation = util.validateArguments.location
+	const validateLocation = util.validateArgument.location
 	const longitude = 13.6
 	const latitude = 50.25
 	t.ok(validateLocation({type: 'location', longitude, latitude}), 'location')
@@ -65,7 +65,7 @@ tape('fptf-util.validateArguments', (t) => {
 
 
 	// opt
-	const validateOpt = util.validateArguments.opt
+	const validateOpt = util.validateArgument.opt
 	t.ok(validateOpt({}), 'opt')
 	t.ok(validateOpt({attribute: 'key'}), 'opt')
 	t.ok(validateOpt(), 'opt')
@@ -75,7 +75,7 @@ tape('fptf-util.validateArguments', (t) => {
 
 
 	// stationsOpt, stopsOpt, regionsOpt
-	for (let validateStationsOpt of [util.validateArguments.stationsOpt, util.validateArguments.stopsOpt, util.validateArguments.regionsOpt]) {
+	for (let validateStationsOpt of [util.validateArgument.stationsOpt, util.validateArgument.stopsOpt, util.validateArgument.regionsOpt]) {
 		t.ok(validateStationsOpt({}), 'stationsOpt')
 		t.ok(validateStationsOpt({attribute: 'key'}), 'stationsOpt')
 		t.ok(validateStationsOpt(), 'stationsOpt')
