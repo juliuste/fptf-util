@@ -18,7 +18,14 @@
 	"repository": "juliuste/fptf-util",
 	"bugs": "https://github.com/juliuste/fptf-util/issues",
 	"main": "./index.js",
-	"dependencies": {},
+	"files": [
+		"index.js",
+		"lib/*"
+	],
+	"dependencies": {
+		"lodash": "^4.17.10",
+		"validate-fptf": "^2.1.1"
+	},
 	"devDependencies": {
 		"tape": "^4.9.1"
 	},
