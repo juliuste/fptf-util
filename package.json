@@ -23,6 +23,7 @@
 		"lib/*"
 	],
 	"dependencies": {
+		"fpti": "0.0.0",
 		"lodash": "^4.17.10",
 		"validate-fptf": "^2.1.1"
 	},
