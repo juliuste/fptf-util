@@ -95,5 +95,24 @@ tape('fptf-util.validateArgument', (t) => {
 		t.throws(() => validateStationsSearchOpt(null), 'stationsSearchOpt')
 	}
 
+
+	// stationsNearbyOpt, stopsNearbyOpt, regionsNearbyOpt
+	for (let validateStationsNearbyOpt of [util.validateArgument.stationsNearbyOpt, util.validateArgument.stopsNearbyOpt, util.validateArgument.regionsNearbyOpt]) {
+		t.ok(validateStationsNearbyOpt({}), 'stationsNearbyOpt')
+		t.ok(validateStationsNearbyOpt({attribute: 'key'}), 'stationsNearbyOpt')
+		t.ok(validateStationsNearbyOpt(), 'stationsNearbyOpt')
+		t.throws(() => validateStationsNearbyOpt(urlSafe), 'stationsNearbyOpt')
+		t.throws(() => validateStationsNearbyOpt(nonString), 'stationsNearbyOpt')
+		t.throws(() => validateStationsNearbyOpt(null), 'stationsNearbyOpt')
+
+		t.ok(validateStationsNearbyOpt({distance: 10}), 'stationsNearbyOpt')
+		t.ok(validateStationsNearbyOpt({distance: 10014.16, otherAttribute: 'val'}), 'stationsNearbyOpt')
+		t.ok(validateStationsNearbyOpt({distance: null}), 'stationsNearbyOpt')
+		t.ok(validateStationsNearbyOpt({distance: undefined}), 'stationsNearbyOpt')
+		t.throws(() => validateStationsNearbyOpt({distance: -100}), 'stationsNearbyOpt')
+		t.throws(() => validateStationsNearbyOpt({distance: urlSafe}), 'stationsNearbyOpt')
+		t.throws(() => validateStationsNearbyOpt({distance: {urlSafe}}), 'stationsNearbyOpt')
+	}
+
 	t.end()
 })
