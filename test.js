@@ -160,5 +160,19 @@ tape('fptf-util.validateArgument', (t) => {
 	t.throws(() => validateOptResults({urlSafe}), 'optResults')
 
 
+	// optInterval
+	const validateOptInterval = util.validateArgument.optInterval
+	t.ok(validateOptInterval(10), 'optInterval')
+	t.ok(validateOptInterval(10014.16), 'optInterval')
+	t.ok(validateOptInterval(), 'optInterval')
+	t.ok(validateOptInterval(null), 'optInterval')
+	t.ok(validateOptInterval(0), 'optInterval')
+	t.throws(() => validateOptInterval(''), 'optInterval')
+	t.throws(() => validateOptInterval({}), 'optInterval')
+	t.throws(() => validateOptInterval(-100), 'optInterval')
+	t.throws(() => validateOptInterval(urlSafe), 'optInterval')
+	t.throws(() => validateOptInterval({urlSafe}), 'optInterval')
+
+
 	t.end()
 })
