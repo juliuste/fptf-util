@@ -1,12 +1,22 @@
 {
-	"name": "boilerplate",
-	"description": "",
+	"name": "fptf-util",
+	"description": "Collection of helper functions for FPTI (Friendly Public Transport Interface) modules.",
 	"version": "0.0.0",
-	"keywords": [],
+	"keywords": [
+		"fpti",
+		"fpti-js",
+		"friendly",
+		"public",
+		"transport",
+		"transportation",
+		"interface",
+		"format",
+		"fptf"
+	],
 	"author": "Julius Tens <mail@juliustens.eu>",
-	"homepage": "https://github.com/juliuste/boilerplate",
-	"repository": "juliuste/boilerplate",
-	"bugs": "https://github.com/juliuste/boilerplate/issues",
+	"homepage": "https://github.com/juliuste/fptf-util",
+	"repository": "juliuste/fptf-util",
+	"bugs": "https://github.com/juliuste/fptf-util/issues",
 	"main": "./index.js",
 	"dependencies": {},
 	"devDependencies": {
