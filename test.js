@@ -84,5 +84,16 @@ tape('fptf-util.validateArgument', (t) => {
 		t.throws(() => validateStationsOpt(null), 'stationsOpt')
 	}
 
+
+	// stationsSearchOpt, stopsSearchOpt, regionsSearchOpt
+	for (let validateStationsSearchOpt of [util.validateArgument.stationsSearchOpt, util.validateArgument.stopsSearchOpt, util.validateArgument.regionsSearchOpt]) {
+		t.ok(validateStationsSearchOpt({}), 'stationsSearchOpt')
+		t.ok(validateStationsSearchOpt({attribute: 'key'}), 'stationsSearchOpt')
+		t.ok(validateStationsSearchOpt(), 'stationsSearchOpt')
+		t.throws(() => validateStationsSearchOpt(urlSafe), 'stationsSearchOpt')
+		t.throws(() => validateStationsSearchOpt(nonString), 'stationsSearchOpt')
+		t.throws(() => validateStationsSearchOpt(null), 'stationsSearchOpt')
+	}
+
 	t.end()
 })
