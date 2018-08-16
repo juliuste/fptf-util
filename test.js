@@ -124,19 +124,20 @@ tape('fptf-util.validateArgument', (t) => {
 	t.throws(() => validateOptDistance({urlSafe}), 'optDistance')
 
 
-	// optWhen
-	const validateOptWhen = util.validateArgument.optWhen
-	t.ok(validateOptWhen(new Date()), 'optWhen')
-	t.ok(validateOptWhen(new Date(100)), 'optWhen')
-	t.ok(validateOptWhen(), 'optWhen')
-	t.ok(validateOptWhen(null), 'optWhen')
-	t.throws(() => validateOptWhen(''), 'optWhen')
-	t.throws(() => validateOptWhen(0), 'optWhen')
-	t.throws(() => validateOptWhen({}), 'optWhen')
-	t.throws(() => validateOptWhen(+new Date()), 'optWhen')
-	t.throws(() => validateOptWhen(nonString), 'optWhen')
-	t.throws(() => validateOptWhen(urlSafe), 'optWhen')
-	t.throws(() => validateOptWhen({urlSafe}), 'optWhen')
+	// optWhen, optDepartureAfter, optArrivalBefore
+	for (let validateOptWhen of [util.validateArgument.optWhen, util.validateArgument.optDepartureAfter, util.validateArgument.optArrivalBefore]) {
+		t.ok(validateOptWhen(new Date()), 'optWhen')
+		t.ok(validateOptWhen(new Date(100)), 'optWhen')
+		t.ok(validateOptWhen(), 'optWhen')
+		t.ok(validateOptWhen(null), 'optWhen')
+		t.throws(() => validateOptWhen(''), 'optWhen')
+		t.throws(() => validateOptWhen(0), 'optWhen')
+		t.throws(() => validateOptWhen({}), 'optWhen')
+		t.throws(() => validateOptWhen(+new Date()), 'optWhen')
+		t.throws(() => validateOptWhen(nonString), 'optWhen')
+		t.throws(() => validateOptWhen(urlSafe), 'optWhen')
+		t.throws(() => validateOptWhen({urlSafe}), 'optWhen')
+	}
 
 
 	// optResults
