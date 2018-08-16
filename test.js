@@ -4,12 +4,13 @@ const tape = require('tape')
 const util = require('./index')
 const isFunction = require('lodash/isfunction')
 
-const urlSafe = 'asd123'
-const nonUrlSafe = 'asd|w«]}≠»d'
-const nonString = 12345
-const shortString = 'a'
+tape.skip('fpti-util.validateArgument', (t) => {
+	// some constants
+	const urlSafe = 'asd123'
+	const nonUrlSafe = 'asd|w«]}≠»d'
+	const nonString = 12345
+	const shortString = 'a'
 
-tape('fptf-util.validateArgument', (t) => {
 	// station, origin, destination
 	const validateStationRight = [
 		urlSafe,
@@ -351,6 +352,47 @@ tape('fptf-util.validateArgument', (t) => {
 	for (let correct of validateStopoversOptRight) t.ok(validateStopoversOpt(correct, 'stopoversOpt'))
 	for (let wrong of validateStopoversOptWrong) t.throws(() => validateStopoversOpt(wrong, 'stopoversOpt'))
 
+	t.end()
+})
+
+tape('fpti-util.validateMethodArguments', (t) => {
+	// stations/stops/regions
+	const validStationsOpt = {someAttribute: 'asd'}
+	const invalidStationsOpt = 12
+	for (let validateStations of [util.validateMethodArguments.stations, util.validateMethodArguments.stops, util.validateMethodArguments.regions]) {
+		t.ok(validateStations(validStationsOpt), 'stations')
+		t.throws(() => validateStations(invalidStationsOpt), 'stations')
+	}
+
+	// stations/stops/regions-Search
+	const validateStationsSearch = util.validateMethodArguments.stationsSearch
+	const validStationsSearchOpt = {someAttribute: 'asd'}
+	const invalidStationsSearchOpt = 12
+	t.ok(validateStationsSearch(validStationsSearchOpt), 'stationsSearch')
+	t.throws(() => validateStationsSearch(invalidStationsSearchOpt), 'stationsSearch')
+
+	// stations/stops/regions-Nearby
+	const validateStationsNearby = util.validateMethodArguments.stationsNearby
+	const validStationsNearbyOpt = {someAttribute: 'asd'}
+	const invalidStationsNearbyOpt = {distance: -6}
+	t.ok(validateStationsNearby(validStationsNearbyOpt), 'stationsNearby')
+	t.throws(() => validateStationsNearby(invalidStationsNearbyOpt), 'stationsSearch')
+
+	// journeys
+	const validateJourneys = util.validateMethodArguments.journeys
+	const validJourneys = {origin: '123456', destination: {type: 'station', name: 'test', id: '1235'}, opt: {when: new Date()}}
+	const invalidJourneys = {origin: '123“]|“456', destination: {type: 'stop', id: '1235'}, opt: {when: new Date(), arrivalBefore: new Date()}}
+	t.ok(validateJourneys(validJourneys.origin, validJourneys.destination, validJourneys.opt), 'journeys')
+	t.throws(() => validateJourneys(invalidJourneys.origin, invalidJourneys.destination, invalidJourneys.opt), 'journeys')
+	t.throws(() => validateJourneys(validJourneys.origin, validJourneys.opt), 'journeys')
+
+	// stopovers
+	const validateStopovers = util.validateMethodArguments.stopovers
+	const validStopovers = {station: '123456', opt: {when: new Date()}}
+	const invalidStopovers = {station: '123“]|“456', opt: {when: new Date(), arrivalBefore: new Date()}}
+	t.ok(validateStopovers(validStopovers.station, validStopovers.opt), 'stopovers')
+	t.throws(() => validateStopovers(invalidStopovers.station, invalidStopovers.opt), 'stopovers')
+	t.throws(() => validateStopovers(validStopovers.opt), 'stopovers')
 
 	t.end()
 })
