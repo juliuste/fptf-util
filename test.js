@@ -174,5 +174,21 @@ tape('fptf-util.validateArgument', (t) => {
 	t.throws(() => validateOptInterval({urlSafe}), 'optInterval')
 
 
+	// optTransfers
+	const validateOptTransfers = util.validateArgument.optTransfers
+	t.ok(validateOptTransfers(1), 'optTransfers')
+	t.ok(validateOptTransfers(192), 'optTransfers')
+	t.ok(validateOptTransfers(0), 'optTransfers')
+	t.ok(validateOptTransfers(), 'optTransfers')
+	t.ok(validateOptTransfers(null), 'optTransfers')
+	t.throws(() => validateOptTransfers(''), 'optTransfers')
+	t.throws(() => validateOptTransfers({}), 'optTransfers')
+	t.throws(() => validateOptTransfers(new Date()), 'optTransfers')
+	t.throws(() => validateOptTransfers(-20), 'optTransfers')
+	t.throws(() => validateOptTransfers(1.26), 'optTransfers')
+	t.throws(() => validateOptTransfers(urlSafe), 'optTransfers')
+	t.throws(() => validateOptTransfers({urlSafe}), 'optTransfers')
+
+
 	t.end()
 })
