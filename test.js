@@ -12,23 +12,18 @@ const shortString = 'a'
 tape('fptf-util.validateArgument', (t) => {
 	// station, origin, destination
 	for (let validateStation of [util.validateArgument.station, util.validateArgument.origin, util.validateArgument.destination]) {
-		t.ok(isFunction(validateStation), 'station')
-
 		t.ok(validateStation(urlSafe), 'station')
+		t.ok(validateStation({type: 'station', id: urlSafe, name: urlSafe}), 'station')
 		t.throws(() => validateStation(nonUrlSafe), 'station')
 		t.throws(() => validateStation(nonString), 'station')
-
-		t.ok(validateStation({type: 'station', id: urlSafe, name: urlSafe}), 'station')
 		t.throws(() => validateStation({type: 'station', id: nonUrlSafe, name: urlSafe}), 'station')
 		t.throws(() => validateStation({type: 'station', id: nonString, name: urlSafe}), 'station')
-
 		t.throws(() => validateStation(''), 'station')
 		t.throws(() => validateStation({type: 'station', id: '', name: urlSafe}), 'station')
 		t.throws(() => validateStation(), 'station')
 		t.throws(() => validateStation({type: 'station', name: urlSafe}), 'station')
 		t.throws(() => validateStation(null), 'station')
 		t.throws(() => validateStation({type: 'station', id: null, name: urlSafe}), 'station')
-
 		t.throws(() => validateStation({type: 'region', id: urlSafe, name: urlSafe}), 'station')
 		t.throws(() => validateStation({type: 'stop', id: urlSafe, name: urlSafe}), 'station')
 		t.throws(() => validateStation({id: urlSafe, name: urlSafe}), 'station')
