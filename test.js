@@ -44,5 +44,15 @@ tape('fptf-util.validateArguments', (t) => {
 	t.throws(() => validateQuery(null), 'query')
 	t.throws(() => validateQuery(), 'query')
 
+
+	// opt
+	const validateOpt = util.validateArguments.opt
+	t.ok(validateOpt({}), 'opt')
+	t.ok(validateOpt({attribute: 'key'}), 'opt')
+	t.ok(validateOpt(), 'opt')
+	t.throws(() => validateOpt(urlSafe), 'opt')
+	t.throws(() => validateOpt(nonString), 'opt')
+	t.throws(() => validateOpt(null), 'opt')
+
 	t.end()
 })
