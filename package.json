@@ -24,6 +24,7 @@
 	],
 	"dependencies": {
 		"fpti": "0.1.0",
+		"is-currency-code": "^1.2.0",
 		"lodash": "^4.17.10",
 		"validate-fptf": "^2.1.1"
 	},

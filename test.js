@@ -205,5 +205,27 @@ tape('fptf-util.validateArgument', (t) => {
 	t.throws(() => validateOptVia({id: urlSafe, name: urlSafe}), 'optVia')
 	t.throws(() => validateOptVia({type: 'station', id: urlSafe}), 'optVia')
 
+
+	// optCurrency
+	const validateOptCurrency = util.validateArgument.optCurrency
+	t.ok(validateOptCurrency('EUR'), 'optCurrency')
+	t.ok(validateOptCurrency('pln'), 'optCurrency')
+	t.ok(validateOptCurrency('GbP'), 'optCurrency')
+	t.ok(validateOptCurrency(), 'optCurrency')
+	t.ok(validateOptCurrency(null), 'optCurrency')
+	t.throws(() => validateOptCurrency('ZZZ'), 'optCurrency')
+	t.throws(() => validateOptCurrency('ABC'), 'optCurrency')
+	t.throws(() => validateOptCurrency('cde'), 'optCurrency')
+	t.throws(() => validateOptCurrency('DeZ'), 'optCurrency')
+	t.throws(() => validateOptCurrency(''), 'optCurrency')
+	t.throws(() => validateOptCurrency({}), 'optCurrency')
+	t.throws(() => validateOptCurrency(new Date()), 'optCurrency')
+	t.throws(() => validateOptCurrency(-20), 'optCurrency')
+	t.throws(() => validateOptCurrency(1.26), 'optCurrency')
+	t.throws(() => validateOptCurrency(urlSafe), 'optCurrency')
+	t.throws(() => validateOptCurrency(nonUrlSafe), 'optCurrency')
+	t.throws(() => validateOptCurrency(nonString), 'optCurrency')
+	t.throws(() => validateOptCurrency({urlSafe}), 'optCurrency')
+
 	t.end()
 })
