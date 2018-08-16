@@ -1,7 +1,7 @@
 {
 	"name": "fpti-util",
 	"description": "Collection of helper functions for FPTI (Friendly Public Transport Interface) modules.",
-	"version": "0.0.0",
+	"version": "0.0.1",
 	"keywords": [
 		"fpti",
 		"fpti-js",
