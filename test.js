@@ -185,25 +185,26 @@ tape('fptf-util.validateArgument', (t) => {
 	t.throws(() => validateOptTransfers({urlSafe}), 'optTransfers')
 
 
-	// optVia
-	const validateOptVia = util.validateArgument.optVia
-	t.ok(validateOptVia(urlSafe), 'optVia')
-	t.ok(validateOptVia({type: 'station', id: urlSafe, name: urlSafe}), 'optVia')
-	t.ok(validateOptVia(), 'optVia')
-	t.ok(validateOptVia(null), 'optVia')
-	t.throws(() => validateOptVia(nonUrlSafe), 'optVia')
-	t.throws(() => validateOptVia(nonString), 'optVia')
-	t.throws(() => validateOptVia({type: 'station', id: nonUrlSafe, name: urlSafe}), 'optVia')
-	t.throws(() => validateOptVia({type: 'station', id: nonString, name: urlSafe}), 'optVia')
-	t.throws(() => validateOptVia(0), 'optVia')
-	t.throws(() => validateOptVia(''), 'optVia')
-	t.throws(() => validateOptVia({type: 'station', id: '', name: urlSafe}), 'optVia')
-	t.throws(() => validateOptVia({type: 'station', name: urlSafe}), 'optVia')
-	t.throws(() => validateOptVia({type: 'station', id: null, name: urlSafe}), 'optVia')
-	t.throws(() => validateOptVia({type: 'region', id: urlSafe, name: urlSafe}), 'optVia')
-	t.throws(() => validateOptVia({type: 'stop', id: urlSafe, name: urlSafe}), 'optVia')
-	t.throws(() => validateOptVia({id: urlSafe, name: urlSafe}), 'optVia')
-	t.throws(() => validateOptVia({type: 'station', id: urlSafe}), 'optVia')
+	// optVia, optDirection
+	for (let validateOptStation of [util.validateArgument.optVia, util.validateArgument.optDirection]) {
+		t.ok(validateOptStation(urlSafe), 'optStation')
+		t.ok(validateOptStation({type: 'station', id: urlSafe, name: urlSafe}), 'optStation')
+		t.ok(validateOptStation(), 'optStation')
+		t.ok(validateOptStation(null), 'optStation')
+		t.throws(() => validateOptStation(nonUrlSafe), 'optStation')
+		t.throws(() => validateOptStation(nonString), 'optStation')
+		t.throws(() => validateOptStation({type: 'station', id: nonUrlSafe, name: urlSafe}), 'optStation')
+		t.throws(() => validateOptStation({type: 'station', id: nonString, name: urlSafe}), 'optStation')
+		t.throws(() => validateOptStation(0), 'optStation')
+		t.throws(() => validateOptStation(''), 'optStation')
+		t.throws(() => validateOptStation({type: 'station', id: '', name: urlSafe}), 'optStation')
+		t.throws(() => validateOptStation({type: 'station', name: urlSafe}), 'optStation')
+		t.throws(() => validateOptStation({type: 'station', id: null, name: urlSafe}), 'optStation')
+		t.throws(() => validateOptStation({type: 'region', id: urlSafe, name: urlSafe}), 'optStation')
+		t.throws(() => validateOptStation({type: 'stop', id: urlSafe, name: urlSafe}), 'optStation')
+		t.throws(() => validateOptStation({id: urlSafe, name: urlSafe}), 'optStation')
+		t.throws(() => validateOptStation({type: 'station', id: urlSafe}), 'optStation')
+	}
 
 
 	// optCurrency
