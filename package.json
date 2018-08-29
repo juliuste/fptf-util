@@ -23,7 +23,7 @@
 		"lib/*"
 	],
 	"dependencies": {
-		"fpti": "0.2.0",
+		"fpti": "0.3.2",
 		"is-currency-code": "^1.2.0",
 		"lodash.isdate": "^4.0.1",
 		"lodash.isnull": "^3.0.0",
