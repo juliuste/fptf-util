@@ -1,8 +1,8 @@
 'use strict'
 
 const tape = require('tape')
-const util = require('./index')
 const isFunction = require('lodash.isfunction')
+const util = require('.')
 
 tape('fpti-util.validateArgument', (t) => {
 	// some constants

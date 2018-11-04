@@ -1,27 +1,34 @@
 {
 	"name": "fpti-util",
-	"description": "Collection of helper functions for FPTI (Friendly Public Transport Interface) modules.",
 	"version": "0.0.1",
+	"description": "Collection of helper functions for FPTI (Friendly Public Transport Interface) modules.",
 	"keywords": [
+		"format",
+		"fptf",
 		"fpti",
 		"fpti-js",
 		"friendly",
+		"interface",
 		"public",
 		"transport",
-		"transportation",
-		"interface",
-		"format",
-		"fptf"
+		"transportation"
 	],
-	"author": "Julius Tens <mail@juliustens.eu>",
 	"homepage": "https://github.com/juliuste/fpti-util",
-	"repository": "juliuste/fpti-util",
 	"bugs": "https://github.com/juliuste/fpti-util/issues",
-	"main": "./index.js",
+	"repository": "juliuste/fpti-util",
+	"license": "ISC",
+	"author": "Julius Tens <mail@juliustens.eu>",
 	"files": [
-		"index.js",
 		"lib/*"
 	],
+	"main": "lib/index.js",
+	"scripts": {
+		"check-deps": "depcheck --ignores='fpti'",
+		"fix": "eslint --fix lib test.js",
+		"lint": "eslint lib test.js",
+		"prepublishOnly": "npm test",
+		"test": "npm run lint && npm run check-deps && node test"
+	},
 	"dependencies": {
 		"fpti": "0.2.0",
 		"is-currency-code": "^1.2.0",
@@ -35,15 +42,17 @@
 		"validate-fptf": "^2.1.1"
 	},
 	"devDependencies": {
+		"depcheck": "^0.6.11",
+		"eslint": "^5.8.0",
+		"eslint-config-standard": "^12.0.0",
+		"eslint-plugin-import": "^2.14.0",
+		"eslint-plugin-node": "^8.0.0",
+		"eslint-plugin-promise": "^4.0.1",
+		"eslint-plugin-standard": "^4.0.0",
 		"lodash.isfunction": "^3.0.9",
 		"tape": "^4.9.1"
 	},
-	"scripts": {
-		"test": "node test.js",
-		"prepublishOnly": "npm test"
-	},
 	"engines": {
 		"node": ">=8"
-	},
-	"license": "ISC"
+	}
 }
