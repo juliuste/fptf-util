@@ -10,7 +10,7 @@ The `fpti-util` provides several helper methods to check if user input arguments
 Helper functions are available for the following FPTI methods:
 
 - [`stations(opt) / stops(opt) / regions(opt)`](#stationsopt--stopsopt--regionsopt)
-- [`stations.search(opt) / stops.search(opt) / regions.search(opt)`](#stationssearchopt--stopssearchopt--regionssearchopt)
+- [`stations.search(query, opt) / stops.search(query, opt) / regions.search(query, opt)`](#stationssearchquery-opt--stopssearchquery-opt--regionssearchquery-opt)
 - [`stations.nearby(opt) / stops.nearby(opt) / regions.nearby(opt)`](#stationsnearbyopt--stopsnearbyopt--regionsnearbyopt)
 - [`journeys(origin, destination, opt)`](#journeysorigin-destination-opt)
 - [`stopovers(station, opt)`](#stopoversstation-opt)
@@ -35,7 +35,7 @@ const stations = (opt) => {
 
 ---
 
-### `stations.search(opt) / stops.search(opt) / regions.search(opt)`
+### `stations.search(query, opt) / stops.search(query, opt) / regions.search(query, opt)`
 
 Use `validateMethodArguments.stationsSearch` to validate all arguments of the `stations.search` method (analogous for `stops.search` and `regions.search`):
 
@@ -44,8 +44,8 @@ const validateStationsSearch = require('fpti-util').validateMethodArguments.stat
 // const validateStationsSearch = require('fpti-util/lib/validate-method-arguments').stationsSearch // alternatively
 
 // your implementation of the stations.search() method
-const search = (opt) => {
-    validateStationsSearch(opt) // throws if invalid
+const search = (query, opt) => {
+    validateStationsSearch(query, opt) // throws if invalid
 
     // any additional validation for opt, if your module provides other options
     // your code

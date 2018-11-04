@@ -366,10 +366,15 @@ tape('fpti-util.validateMethodArguments', (t) => {
 
 	// stations/stops/regions-Search
 	const validateStationsSearch = util.validateMethodArguments.stationsSearch
+	const validStationsSearchQuery = 'Ljubl'
 	const validStationsSearchOpt = {someAttribute: 'asd'}
 	const invalidStationsSearchOpt = 12
-	t.ok(validateStationsSearch(validStationsSearchOpt), 'stationsSearch')
-	t.throws(() => validateStationsSearch(invalidStationsSearchOpt), 'stationsSearch')
+	const invalidStationsSearchQuery = 12
+	t.ok(validateStationsSearch(validStationsSearchQuery), 'stationsSearch')
+	t.ok(validateStationsSearch(validStationsSearchQuery, validStationsSearchOpt), 'stationsSearch')
+	t.throws(() => validateStationsSearch(invalidStationsSearchQuery), 'stationsSearch')
+	t.throws(() => validateStationsSearch(validStationsSearchQuery, invalidStationsSearchOpt), 'stationsSearch')
+	t.throws(() => validateStationsSearch(invalidStationsSearchQuery, validStationsSearchOpt), 'stationsSearch')
 
 	// stations/stops/regions-Nearby
 	const validateStationsNearby = util.validateMethodArguments.stationsNearby
