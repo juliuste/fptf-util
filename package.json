@@ -39,7 +39,7 @@
 		"lodash.isstring": "^4.0.1",
 		"lodash.isundefined": "^3.0.1",
 		"lodash.omit": "^4.5.0",
-		"validate-fptf": "^2.1.1"
+		"validate-fptf": "^3.0.0"
 	},
 	"devDependencies": {
 		"depcheck": "^0.6.11",
