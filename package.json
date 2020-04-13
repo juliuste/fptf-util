@@ -19,7 +19,8 @@
 	"license": "ISC",
 	"author": "Julius Tens <mail@juliustens.eu>",
 	"files": [
-		"lib/*"
+		"lib/*",
+		"docs"
 	],
 	"main": "lib/index.js",
 	"scripts": {
